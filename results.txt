@@ -1,0 +1,29 @@
+600k rows
+
+postgres=# explain analyse insert into books_local_solid values (gen_random_uuid(), 'title', 1900, 100);
+                                               QUERY PLAN
+---------------------------------------------------------------------------------------------------------
+ Insert on books_local_solid  (cost=0.00..0.01 rows=0 width=0) (actual time=0.173..0.178 rows=0 loops=1)
+   ->  Result  (cost=0.00..0.01 rows=1 width=56) (actual time=0.030..0.034 rows=1 loops=1)
+ Planning Time: 0.032 ms
+ Execution Time: 0.205 ms
+(4 rows)
+
+postgres=# explain analyse insert into books_local_partition values (gen_random_uuid(), 'title', 1900, 100);
+                                                 QUERY PLAN
+-------------------------------------------------------------------------------------------------------------
+ Insert on books_local_partition  (cost=0.00..0.01 rows=0 width=0) (actual time=0.259..0.264 rows=0 loops=1)
+   ->  Result  (cost=0.00..0.01 rows=1 width=56) (actual time=0.031..0.034 rows=1 loops=1)
+ Planning Time: 0.033 ms
+ Execution Time: 0.299 ms
+(4 rows)
+
+postgres=# explain analyse insert into books_fdw_partition values (gen_random_uuid(), 'title', 1900, 100);
+                                                QUERY PLAN
+-----------------------------------------------------------------------------------------------------------
+ Insert on books_fdw_partition  (cost=0.00..0.01 rows=0 width=0) (actual time=1.055..1.059 rows=0 loops=1)
+   ->  Result  (cost=0.00..0.01 rows=1 width=56) (actual time=0.029..0.033 rows=1 loops=1)
+ Planning Time: 0.031 ms
+ Execution Time: 1.318 ms
+(4 rows)
+
